@@ -1,57 +1,49 @@
-package backend.entity;
+package backend.booking.dto;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "bookings")
-public class Booking {
+/**
+ * DTO for booking responses in API.
+ * Returned when fetching booking details.
+ */
+public class BookingResponseDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "resource_id", nullable = false)
-    private Resource resource;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @Column(name = "start_time", nullable = false)
+    private Long userId;
+    private String userName;
+    private Long resourceId;
+    private String resourceName;
     private LocalDateTime startTime;
-
-    @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
-
-    @Column(name = "purpose", length = 500)
     private String purpose;
-
-    @Column(name = "expected_attendees")
     private Integer expectedAttendees;
-
-    @Column(name = "status", length = 30, nullable = false)
     private String status;
-
-    @Column(name = "approval_reason", length = 500)
     private String approvalReason;
-
-    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
+    // Constructors
+
+    public BookingResponseDTO() {
     }
 
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
+    public BookingResponseDTO(Long id, Long userId, String userName, Long resourceId, 
+                             String resourceName, LocalDateTime startTime, LocalDateTime endTime,
+                             String purpose, Integer expectedAttendees, String status,
+                             String approvalReason, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.userId = userId;
+        this.userName = userName;
+        this.resourceId = resourceId;
+        this.resourceName = resourceName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.purpose = purpose;
+        this.expectedAttendees = expectedAttendees;
+        this.status = status;
+        this.approvalReason = approvalReason;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     // Getters and Setters
@@ -64,20 +56,36 @@ public class Booking {
         this.id = id;
     }
 
-    public Resource getResource() {
-        return resource;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setResource(Resource resource) {
-        this.resource = resource;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Long getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(Long resourceId) {
+        this.resourceId = resourceId;
+    }
+
+    public String getResourceName() {
+        return resourceName;
+    }
+
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName;
     }
 
     public LocalDateTime getStartTime() {
